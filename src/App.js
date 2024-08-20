@@ -23,9 +23,7 @@ function App() {
     );
   }
   function handleDelete(id) {
-    setTodoList(
-      todoList.filter(item => item.id !== id)
-    )
+    setTodoList(todoList.filter((item) => item.id !== id));
   }
   function handleEdit(id) {
     setTodoList(
@@ -34,10 +32,12 @@ function App() {
       )
     );
   }
-  function getEditedTaskValue(id , value){
+  function getEditedTaskValue(id, value) {
     setTodoList(
-      todoList.map(item => item.id === id ? {...item , task : value , isEdited : false} : item) 
-    )
+      todoList.map((item) =>
+        item.id === id ? { ...item, task: value, isEdited: false } : item
+      )
+    );
   }
 
   return (
@@ -50,9 +50,15 @@ function App() {
         deleteTask={handleDelete}
         editTask={handleEdit}
       />
-      {
-        todoList.map(task => task.isEdited === true ? <EditPanel key={task.id} id={task.id} sendEditedTask={getEditedTaskValue}></EditPanel> : null)
-      }
+      {todoList.map((task) =>
+        task.isEdited === true ? (
+          <EditPanel
+            key={task.id}
+            id={task.id}
+            sendEditedTask={getEditedTaskValue}
+          ></EditPanel>
+        ) : null
+      )}
     </div>
   );
 }

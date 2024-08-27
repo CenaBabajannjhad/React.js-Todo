@@ -6,6 +6,7 @@ import EditPanel from "./components/EditPanel";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
+
   function getTodo(todo) {
     const newTodo = {
       id: Date.now(),
@@ -39,23 +40,36 @@ function App() {
       )
     );
   }
+  function cancelEditPanel(id){
+    setTodoList(
+      todoList.map((item) =>
+        item.id === id ? { ...item, isEdited: false } : item
+      )
+    );
+  }
+
+
 
   return (
     <div className="w-screen h-screen bg-white">
-      <TodoHeader title="TodoList" />
+      <TodoHeader />
+      
       <TodoForm sendTodo={getTodo} />
+
       <TodosWrapper
         allTodos={todoList}
         completeTask={handleCompleted}
         deleteTask={handleDelete}
         editTask={handleEdit}
       />
+
       {todoList.map((task) =>
         task.isEdited === true ? (
           <EditPanel
             key={task.id}
             id={task.id}
             sendEditedTask={getEditedTaskValue}
+            cancelEdit={cancelEditPanel}
           ></EditPanel>
         ) : null
       )}
